@@ -1,0 +1,19 @@
+
+> chatbot@0.1.0 dev
+> next dev
+
+▲ Next.js 16.2.12 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://10.91.109.103:3000
+- Environments: .env.local
+✓ Ready in 329ms
+
+ GET / 200 in 278ms (next.js: 138ms, application-code: 140ms)
+ GET / 200 in 181ms (next.js: 14ms, application-code: 167ms)
+ GET /chat 200 in 143ms (next.js: 61ms, application-code: 82ms)
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+ POST /api/chat 200 in 1870ms (next.js: 438ms, application-code: 1432ms)
+ POST /api/chat 200 in 3.0s (next.js: 9ms, application-code: 3.0s)
+ POST /api/chat 200 in 2.2s (next.js: 11ms, application-code: 2.2s)
+✓ Compiled in 543ms
+ GET / 200 in 888ms (next.js: 303ms, application-code: 585ms)
