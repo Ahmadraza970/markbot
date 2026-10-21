@@ -3,22 +3,19 @@
 
 @theme {
   --color-*: initial;
-  --color-zinc-950: #09090b;
-  --color-zinc-900: #18181b;
-  --color-zinc-800: #27272a;
-  --color-zinc-700: #3f3f46;
-  --color-zinc-600: #52525b;
-  --color-zinc-500: #71717a;
-  --color-zinc-400: #a1a1aa;
-  --color-zinc-300: #d4d4d8;
-  --color-zinc-200: #e4e4e7;
-  --color-cyan-500: #06b6d4;
-  --color-cyan-400: #22d3ee;
-  --color-purple-600: #9333ea;
-  --color-purple-500: #a855f7;
-  --color-red-500: #ef4444;
-  --color-red-400: #f87171;
-  --color-green-500: #22c55e;
+  --color-chat-bg: #212121;
+  --color-chat-surface: #171717;
+  --color-chat-sidebar: #121212;
+  --color-chat-elevated: #2f2f2f;
+  --color-chat-border: #424242;
+  --color-chat-hover: #333333;
+  --color-chat-text: #e4e4e7;
+  --color-chat-muted: #9ca3af;
+  --color-chat-dim: #6b7280;
+  --color-chat-accent: #10a37f;
+  --color-chat-accent-hover: #0e8c6b;
+  --color-chat-danger: #ef4444;
+  --color-chat-danger-bg: #451a1a;
   --color-white: #ffffff;
   --color-black: #000000;
   --font-sans: 'Space Grotesk', system-ui, -apple-system, sans-serif;
@@ -26,16 +23,22 @@
 
 html {
   scroll-behavior: smooth;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  overscroll-behavior: none;
 }
 
 body {
   font-family: var(--font-sans);
-  background: var(--color-zinc-950);
-  color: var(--color-zinc-200);
+  background: var(--color-chat-bg);
+  color: var(--color-chat-text);
 }
 
 .prose {
   max-width: none;
+  color: var(--color-chat-text);
 }
 
 .prose p {
@@ -83,10 +86,10 @@ body {
 }
 
 .prose blockquote {
-  border-left: 3px solid #06b6d4;
+  border-left: 3px solid var(--color-chat-accent);
   padding-left: 1em;
   margin: 0.75em 0;
-  color: #a1a1aa;
+  color: var(--color-chat-muted);
 }
 
 .prose table {

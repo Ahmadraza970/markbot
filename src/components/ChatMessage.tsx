@@ -12,7 +12,6 @@ type Message = {
 };
 
 export function ChatMessage({ message }: { message: Message }) {
-  const isUser = message.role === "user";
   const isAssistant = message.role === "assistant";
 
   const text =
@@ -22,22 +21,25 @@ export function ChatMessage({ message }: { message: Message }) {
       .join("") ?? message.content ?? "";
 
   return (
-    <div className={`flex gap-3 ${isUser ? "justify-end" : "justify-start"}`}>
-      {!isUser && (
-        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-500 to-purple-600 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-1">
-          AI
+    <div className={`flex gap-3 ${isAssistant ? "" : "justify-end"}`}>
+      {isAssistant && (
+        <div
+          className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"
+          style={{ background: "var(--color-chat-accent)" }}
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round">
+            <path d="M12 2L12 6M12 18L12 22M4.93 4.93L7.76 7.76M16.24 16.24L19.07 19.07M2 12L6 12M18 12L22 12M4.93 19.07L7.76 16.24M16.24 7.76L19.07 4.93" opacity="0.4" />
+          </svg>
         </div>
       )}
       <div
-        className={`max-w-[80%] rounded-2xl px-4 py-3 ${
-          isUser
-            ? "bg-cyan-500/10 border border-cyan-500/20 text-zinc-200"
-            : "bg-zinc-800/50 border border-zinc-700/50 text-zinc-200"
-        }`}
+        className={`max-w-[85%] rounded-2xl px-4 py-3`}
+        style={{
+          background: isAssistant ? "var(--color-chat-elevated)" : "var(--color-chat-accent)",
+          color: isAssistant ? "var(--color-chat-text)" : "white",
+        }}
       >
-        {isUser ? (
-          <p className="text-sm whitespace-pre-wrap">{text}</p>
-        ) : (
+        {isAssistant ? (
           <div className="prose prose-invert prose-sm max-w-none">
             <ReactMarkdown
               remarkPlugins={[remarkGfm]}
@@ -46,10 +48,15 @@ export function ChatMessage({ message }: { message: Message }) {
               {text}
             </ReactMarkdown>
           </div>
+        ) : (
+          <p className="text-sm whitespace-pre-wrap">{text}</p>
         )}
       </div>
-      {isUser && (
-        <div className="w-8 h-8 rounded-full bg-zinc-700 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-1">
+      {!isAssistant && (
+        <div
+          className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 text-xs font-medium"
+          style={{ background: "var(--color-chat-elevated)", color: "var(--color-chat-text)" }}
+        >
           U
         </div>
       )}
