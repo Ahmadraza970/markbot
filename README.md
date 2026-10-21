@@ -23,6 +23,12 @@ AI Chat is a focused, single-purpose chat client. It streams responses token by 
 
 It speaks the OpenAI-compatible protocol, so it runs against **OpenRouter** out of the box and can be pointed at any compatible endpoint by changing one environment variable.
 
+## Preview
+
+<div align="center">
+  <img src="docs/screenshot.png" alt="AI Chat showing a streamed answer with a syntax-highlighted JavaScript code block" width="820">
+</div>
+
 ## Features
 
 | | |
