@@ -1,8 +1,10 @@
 <div align="center">
 
-# AI Chat
+# MarkBot — AI Chat with Markdown & Code
 
-**A streaming AI chat interface that installs like a native app.**
+**A streaming AI chat that renders Markdown and code beautifully — and installs like a native app.**
+
+**Live demo: [md-bot.netlify.app](https://md-bot.netlify.app)**
 
 Next.js · React 19 · TypeScript · Tailwind v4 · AI SDK v7 · OpenRouter
 
@@ -11,6 +13,7 @@ Next.js · React 19 · TypeScript · Tailwind v4 · AI SDK v7 · OpenRouter
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)
 ![Tailwind](https://img.shields.io/badge/Tailwind-4-06B6D4?logo=tailwindcss&logoColor=white)
 ![AI SDK](https://img.shields.io/badge/AI_SDK-7-111111)
+![License](https://img.shields.io/badge/License-MIT-green)
 ![Status](https://img.shields.io/badge/repo-private-red)
 
 </div>
@@ -19,14 +22,14 @@ Next.js · React 19 · TypeScript · Tailwind v4 · AI SDK v7 · OpenRouter
 
 ## Overview
 
-AI Chat is a focused, single-purpose chat client. It streams responses token by token, renders them as rich Markdown with syntax-highlighted code, and can be installed to a phone's home screen as a standalone PWA — no app store, no wrapper.
+MarkBot is a focused, single-purpose AI chat client. It streams responses token by token, renders them as rich Markdown with syntax-highlighted code, and can be installed to a phone's home screen as a standalone PWA — no app store, no wrapper.
 
-It speaks the OpenAI-compatible protocol, so it runs against **OpenRouter** out of the box and can be pointed at any compatible endpoint by changing one environment variable.
+It speaks the OpenAI-compatible protocol, so it runs against **OpenRouter** out of the box and can be pointed at any compatible endpoint by changing one environment variable. The API key is read on the server only — it never reaches the browser.
 
 ## Preview
 
 <div align="center">
-  <img src="docs/screenshot.png" alt="AI Chat showing a streamed answer with a syntax-highlighted JavaScript code block" width="820">
+  <img src="docs/screenshot.png" alt="MarkBot showing a streamed answer with a syntax-highlighted JavaScript code block" width="820">
 </div>
 
 ## Features
@@ -58,8 +61,8 @@ It speaks the OpenAI-compatible protocol, so it runs against **OpenRouter** out 
 **Requirements:** Node.js 20+ and an API key for an OpenAI-compatible provider.
 
 ```bash
-git clone https://github.com/Ahmadraza970/md-bot.git
-cd md-bot
+git clone https://github.com/Ahmadraza970/markbot.git
+cd markbot
 npm install
 ```
 
@@ -76,7 +79,7 @@ Then start the development server:
 npm run dev
 ```
 
-Open **http://localhost:3000** — the chat lives at `/chat`, and `/` redirects there.
+Open **http://localhost:3000** — the chat lives at `/chat`, and `/` renders it directly.
 
 > The dev script runs `next dev --webpack` deliberately. Keep the flag.
 
@@ -134,7 +137,7 @@ instructions: "You are a helpful AI assistant. Respond clearly and concisely.",
 
 ## Deployment
 
-`netlify.toml` is included and configures the build command, the `.next` publish directory, and baseline security headers (`X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`) plus cache policy for the manifest.
+The live app runs on Netlify: **[md-bot.netlify.app](https://md-bot.netlify.app)**. `netlify.toml` configures the build command, the `.next` publish directory, and baseline security headers (`X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`) plus cache policy for the manifest.
 
 Set `OPENAI_API_KEY` in your host's environment settings before the first deploy — build succeeds without it, but chat requests will return the configuration error.
 
@@ -146,8 +149,12 @@ Any Node host works: the only runtime requirement is a long-lived Node server ca
 - **Rate limiting is not included.** If the endpoint is public, add a limiter at the edge or proxy before exposing it.
 - **The install button appears only when the browser offers installation.** On unsupported browsers the component renders nothing rather than showing a dead control.
 
+## License
+
+MIT — see [LICENSE](LICENSE).
+
 ---
 
 <div align="center">
-<sub>Built with Next.js, the Vercel AI SDK and Tailwind CSS.</sub>
+<sub>Built by <b>Ahmad Raza</b> — <a href="https://ahmadstudio.onrender.com">Ahmad Digital Studio</a> · Built with Next.js, the Vercel AI SDK and Tailwind CSS.</sub>
 </div>
