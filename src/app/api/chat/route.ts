@@ -1,13 +1,22 @@
-import { streamText, createUIMessageStreamResponse, toUIMessageStream } from "ai";
+import { streamText, createUIMessageStreamResponse, toUIMessageStream, type ModelMessage } from "ai";
 import { createOpenAI } from "@ai-sdk/openai";
+import { MARKBOT_SYSTEM_PROMPT } from "@/lib/system-prompt";
 
 const openai = createOpenAI({
   baseURL: process.env.OPENAI_BASE_URL || "https://openrouter.ai/api/v1",
 });
 
+type IncomingMessage = {
+  role?: string;
+  content?: string;
+  parts?: Array<{ type: string; text?: string }>;
+};
+
 export async function POST(req: Request) {
   try {
-    const { messages: msgs } = await req.json();
+    const { messages: msgs } = (await req.json()) as {
+      messages?: IncomingMessage[];
+    };
 
     if (!process.env.OPENAI_API_KEY) {
       return new Response(
@@ -16,16 +25,15 @@ export async function POST(req: Request) {
       );
     }
 
-    const modelMessages = (msgs ?? []).map((m: any) => ({
+    const modelMessages: ModelMessage[] = (msgs ?? []).map((m) => ({
       role: m.role === "assistant" ? "assistant" : "user",
       content:
-        m.parts?.find((p: any) => p.type === "text")?.text ?? m.content ?? "",
+        m.parts?.find((p) => p.type === "text")?.text ?? m.content ?? "",
     }));
 
     const result = streamText({
       model: openai.chat("gpt-4o-mini"),
-      instructions:
-        "You are a helpful AI assistant. Respond clearly and concisely.",
+      instructions: MARKBOT_SYSTEM_PROMPT,
       messages: modelMessages,
     });
 
@@ -36,9 +44,10 @@ export async function POST(req: Request) {
           err instanceof Error ? err.message : "Something went wrong. Please try again.",
       }),
     });
-  } catch (err: any) {
+  } catch (err: unknown) {
+    const detail = err instanceof Error ? err.message.replace(/"/g, "'") : "";
     return new Response(
-      `data: {"type":"error","errorText":"${err?.message?.replace(/"/g, "'") || "Something went wrong. Please try again."}"}\n\ndata: [DONE]\n`,
+      `data: {"type":"error","errorText":"${detail || "Something went wrong. Please try again."}"}\n\ndata: [DONE]\n`,
       { headers: { "Content-Type": "text/event-stream" } }
     );
   }
