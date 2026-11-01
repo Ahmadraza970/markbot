@@ -79,23 +79,21 @@ export default function ChatPage() {
         <span className="text-base font-semibold" style={{color: "var(--color-chat-text)"}}>
           MarkBot
         </span>
-        <div className="flex items-center gap-2">
-          {messages.length > 0 && (
-            <button
-              onClick={() => {
-                if (window.confirm("Clear all messages?")) {
-                  setMessages([]);
-                }
-              }}
-              className="px-3 py-1.5 text-xs font-medium rounded-lg transition-colors"
-              style={{color: "var(--color-chat-dim)", border: "1px solid var(--color-chat-border)"}}
-            >
-              Clear Chat
-            </button>
-          )}
+        <div className="flex items-center gap-1.5">
+          <button
+            onClick={() => {
+              if (messages.length > 0 && window.confirm("Clear all messages?")) {
+                setMessages([]);
+              }
+            }}
+            className="px-2.5 py-1.5 text-xs font-medium rounded-lg transition-colors"
+            style={{color: "var(--color-chat-dim)", border: "1px solid var(--color-chat-border)"}}
+          >
+            Clear Chat
+          </button>
           <button
             onClick={() => setKeyPanelOpen((v) => !v)}
-            className="px-3 py-1.5 text-xs font-medium rounded-lg transition-colors"
+            className="px-2.5 py-1.5 text-xs font-medium rounded-lg transition-colors"
             style={{color: "var(--color-chat-dim)", border: "1px solid var(--color-chat-border)"}}
           >
             {userKey ? "🔑 Key On" : "🔑 Add Key"}
