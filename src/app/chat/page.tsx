@@ -8,6 +8,49 @@ import { InstallButton } from "@/components/InstallButton";
 export default function ChatPage() {
   const { messages, setMessages, sendMessage, status, error, clearError } = useChat();
   const [input, setInput] = useState("");
+  const [userKey, setUserKey] = useState("");
+  const [keyDraft, setKeyDraft] = useState("");
+  const [keyPanelOpen, setKeyPanelOpen] = useState(false);
+
+  useEffect(() => {
+    // Load the visitor's own key (browser-only storage) in a frame callback
+    // so the first render matches the server output.
+    const raf = requestAnimationFrame(() => {
+      try {
+        const saved = window.localStorage.getItem("markbot.apiKey") ?? "";
+        if (saved) {
+          setUserKey(saved);
+          setKeyDraft(saved);
+        }
+      } catch {
+        // storage unavailable (private mode etc.) — the app still works
+      }
+    });
+    return () => cancelAnimationFrame(raf);
+  }, []);
+
+  const saveKey = () => {
+    const k = keyDraft.trim();
+    try {
+      if (k) window.localStorage.setItem("markbot.apiKey", k);
+      else window.localStorage.removeItem("markbot.apiKey");
+    } catch {
+      // ignore storage failures; the key still applies to this session
+    }
+    setUserKey(k);
+    setKeyPanelOpen(false);
+  };
+
+  const removeKey = () => {
+    try {
+      window.localStorage.removeItem("markbot.apiKey");
+    } catch {
+      // nothing to remove
+    }
+    setUserKey("");
+    setKeyDraft("");
+    setKeyPanelOpen(false);
+  };
 
   useEffect(() => {
     const setVh = () => {
@@ -24,7 +67,7 @@ export default function ChatPage() {
     if (error) clearError();
     if (status === "error") clearError();
     if (status !== "ready" && status !== "error") return;
-    sendMessage({ text: input });
+    sendMessage({ text: input }, userKey ? { body: { apiKey: userKey } } : undefined);
     setInput("");
   };
 
@@ -50,9 +93,56 @@ export default function ChatPage() {
               Clear Chat
             </button>
           )}
+          <button
+            onClick={() => setKeyPanelOpen((v) => !v)}
+            className="px-3 py-1.5 text-xs font-medium rounded-lg transition-colors"
+            style={{color: "var(--color-chat-dim)", border: "1px solid var(--color-chat-border)"}}
+          >
+            {userKey ? "🔑 Key On" : "🔑 Add Key"}
+          </button>
           <InstallButton />
         </div>
       </header>
+
+      {keyPanelOpen && (
+        <div className="px-4 py-3" style={{borderBottom: "1px solid var(--color-chat-border)", background: "var(--color-chat-surface)"}}>
+          <div className="max-w-3xl mx-auto flex flex-col gap-2">
+            <label className="text-xs font-medium" style={{color: "var(--color-chat-text)"}}>
+              Your OpenRouter API key
+            </label>
+            <div className="flex gap-2">
+              <input
+                type="password"
+                value={keyDraft}
+                onChange={(e) => setKeyDraft(e.target.value)}
+                placeholder="sk-or-..."
+                autoComplete="off"
+                className="flex-1 bg-transparent text-sm outline-none rounded-lg px-3 py-2"
+                style={{color: "var(--color-chat-text)", border: "1px solid var(--color-chat-border)"}}
+              />
+              <button
+                onClick={saveKey}
+                className="px-3 py-2 text-xs font-medium rounded-lg text-white transition-opacity hover:opacity-90"
+                style={{background: "var(--color-chat-accent)"}}
+              >
+                Save
+              </button>
+              {userKey && (
+                <button
+                  onClick={removeKey}
+                  className="px-3 py-2 text-xs font-medium rounded-lg transition-colors"
+                  style={{color: "var(--color-chat-danger)", border: "1px solid var(--color-chat-border)"}}
+                >
+                  Remove
+                </button>
+              )}
+            </div>
+            <p className="text-xs" style={{color: "var(--color-chat-dim)"}}>
+              Saved only in this browser — never stored or logged on the server. It is sent with each message only to fetch your reply. Leave empty to use the built-in free chat.
+            </p>
+          </div>
+        </div>
+      )}
 
       <div className="flex-1 overflow-y-auto">
         <div className="max-w-3xl mx-auto px-4 py-6 space-y-6">
