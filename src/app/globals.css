@@ -3,19 +3,19 @@
 
 @theme {
   --color-*: initial;
-  --color-chat-bg: #212121;
-  --color-chat-surface: #171717;
-  --color-chat-sidebar: #121212;
-  --color-chat-elevated: #2f2f2f;
-  --color-chat-border: #424242;
-  --color-chat-hover: #333333;
-  --color-chat-text: #e4e4e7;
-  --color-chat-muted: #9ca3af;
-  --color-chat-dim: #6b7280;
-  --color-chat-accent: #10a37f;
-  --color-chat-accent-hover: #0e8c6b;
-  --color-chat-danger: #ef4444;
-  --color-chat-danger-bg: #451a1a;
+  --color-chat-bg: #ffffff;
+  --color-chat-surface: #f7f8f7;
+  --color-chat-sidebar: #f2f4f2;
+  --color-chat-elevated: #eef1ee;
+  --color-chat-border: #dfe4df;
+  --color-chat-hover: #e6eae6;
+  --color-chat-text: #111111;
+  --color-chat-muted: #4b5563;
+  --color-chat-dim: #717871;
+  --color-chat-accent: #16a34a;
+  --color-chat-accent-hover: #15803d;
+  --color-chat-danger: #dc2626;
+  --color-chat-danger-bg: #fdecec;
   --color-white: #ffffff;
   --color-black: #000000;
   --font-sans: var(--font-space-grotesk), 'Space Grotesk', system-ui, -apple-system, sans-serif;
@@ -54,8 +54,9 @@ body {
 }
 
 .prose pre {
-  background: #0d0d14;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: #0b0f0c;
+  color: #e8f0e8;
+  border: 1px solid rgba(0, 0, 0, 0.35);
   border-radius: 0.75rem;
   padding: 1rem;
   overflow-x: auto;
@@ -65,7 +66,7 @@ body {
 .prose code {
   font-size: 0.85em;
   padding: 0.2em 0.4em;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(22, 163, 74, 0.1);
   border-radius: 0.3em;
 }
 
@@ -100,13 +101,13 @@ body {
 
 .prose th,
 .prose td {
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.12);
   padding: 0.5em 0.75em;
   text-align: left;
 }
 
 .prose th {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(0, 0, 0, 0.04);
 }
 
 ::-webkit-scrollbar {
@@ -118,10 +119,10 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.16);
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(0, 0, 0, 0.3);
 }
