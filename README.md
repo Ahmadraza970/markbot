@@ -42,6 +42,8 @@ It speaks the OpenAI-compatible protocol, so it runs against an OpenAI-compatibl
 | **Installable PWA** | Native install prompt on Chrome/Edge, with guided *Add to Home Screen* instructions on iOS Safari |
 | **Mobile-first layout** | Dynamic viewport height (`--vh`) and safe-area insets keep the composer clear of notches and browser chrome |
 | **Provider-agnostic** | Any OpenAI-compatible base URL — a hosted provider or a local server |
+| **Free by default** | The built-in key only ever calls a free model (`openrouter/free`) — never a paid one |
+| **Bring your own key** | Visitors can paste their own OpenRouter API key; it is stored only in their browser and used per request, never stored or logged server-side |
 | **Graceful failures** | Missing API key and upstream errors surface as readable chat messages, never a blank screen |
 | **Zero client persistence** | Conversations live in memory only; nothing is written to storage or a database |
 
