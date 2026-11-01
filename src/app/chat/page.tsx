@@ -238,6 +238,12 @@ export default function ChatPage() {
           </button>
         </div>
       </form>
+      <p className="pb-2 text-center text-[11px]" style={{ color: "var(--color-chat-dim)", background: "var(--color-chat-bg)" }}>
+        Free · No sign-up · Chats are not stored ·{" "}
+        <a href="/privacy" className="underline">
+          Privacy Policy
+        </a>
+      </p>
     </div>
   );
 }
