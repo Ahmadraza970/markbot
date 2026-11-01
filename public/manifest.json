@@ -1,7 +1,7 @@
 {
-  "name": "AI Chat",
-  "short_name": "AI Chat",
-  "description": "Chat with an AI assistant powered by OpenRouter AI",
+  "name": "MarkBot",
+  "short_name": "MarkBot",
+  "description": "MarkBot — a friendly AI chatbot built by Ahmad Raza of Ahmad Digital Studio.",
   "start_url": "/chat",
   "display": "standalone",
   "orientation": "portrait",
