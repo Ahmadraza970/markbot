@@ -10,8 +10,8 @@
 
 ## Try it
 
-- **Web:** open the [live demo](https://markbot-ahmad.vercel.app) and start typing — no sign-up, no key needed.
-- **Android:** get the app from the [download page](https://markbot-ahmad.vercel.app/download), or install the [APK directly](https://markbot-ahmad.vercel.app/MarkBot.apk) (41 KB, Android 7.0+). The app is a clean full-screen shell — no browser address bar, just MarkBot.
+- **Web:** the [live site](https://markbot-ahmad.vercel.app) opens a landing page with both options — or jump straight to the [web chat](https://markbot-ahmad.vercel.app/chat). No sign-up, no key needed.
+- **Android:** get the app from the [download page](https://markbot-ahmad.vercel.app/download), or install the [APK directly](https://markbot-ahmad.vercel.app/MarkBot.apk) (41 KB, Android 7.0+). The app opens straight into the chat — no landing page, no download buttons inside; app means app.
 
 ## Features
 
