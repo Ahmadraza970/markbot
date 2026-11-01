@@ -22,6 +22,16 @@ export function InstallButton() {
     // frame callback so the first render matches the server output and the
     // state updates land in a callback, not synchronously in the effect.
     const raf = requestAnimationFrame(() => {
+      // Inside the MarkBot Android app (a WebView) this button must never
+      // appear — the app is already installed; app means app only.
+      const inAppWebView =
+        navigator.userAgent.includes("; wv)") ||
+        navigator.userAgent.includes("MarkBotApp");
+      if (inAppWebView) {
+        setInstalled(true);
+        return;
+      }
+
       const isInstalled =
         window.matchMedia("(display-mode: standalone)").matches ||
         window.matchMedia("(display-mode: minimal-ui)").matches ||
