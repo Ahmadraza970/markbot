@@ -62,6 +62,10 @@ export default function DownloadPage() {
           Built by Ahmad Raza · Ahmad Digital Studio ·{" "}
           <a href="https://ahmadstudio.onrender.com" className="underline" target="_blank" rel="noreferrer">
             ahmadstudio.onrender.com
+          </a>{" "}
+          ·{" "}
+          <a href="/privacy" className="underline">
+            Privacy Policy
           </a>
         </p>
       </div>
