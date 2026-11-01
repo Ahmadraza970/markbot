@@ -34,7 +34,7 @@ export default function ChatPage() {
     <div className="flex flex-col" style={{height: "calc(var(--vh, 1vh) * 100)", background: "var(--color-chat-bg)"}}>
       <header className="flex items-center justify-between px-4 py-3 pt-[max(0.75rem_env(safe-area-inset-top))] pb-3" style={{borderBottom: "1px solid var(--color-chat-border)", minHeight: "48px"}}>
         <span className="text-base font-semibold" style={{color: "var(--color-chat-text)"}}>
-          AI Chat
+          MarkBot
         </span>
         <div className="flex items-center gap-2">
           {messages.length > 0 && (
@@ -62,7 +62,7 @@ export default function ChatPage() {
                 Ask anything
               </h2>
               <p className="text-sm" style={{color: "var(--color-chat-dim)"}}>
-                Type a message to start a conversation.
+                MarkBot by Ahmad Raza · Type a message to start a conversation.
               </p>
             </div>
           )}
@@ -130,7 +130,7 @@ export default function ChatPage() {
           <input
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Message AI Chat..."
+            placeholder="Message MarkBot..."
             className="flex-1 bg-transparent text-sm outline-none"
             style={{color: "var(--color-chat-text)"}}
             disabled={isLoading}
