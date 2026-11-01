@@ -1,14 +1,21 @@
 import type { Metadata, Viewport } from "next";
+import { Space_Grotesk } from "next/font/google";
 import "./globals.css";
 
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-space-grotesk",
+});
+
 export const metadata: Metadata = {
-  title: "AI Chat - Powered by OpenRouter AI",
-  description: "Chat with an AI assistant powered by OpenRouter AI",
+  title: "MarkBot — AI Chatbot by Ahmad Digital Studio",
+  description: "MarkBot is a friendly AI chatbot built by Ahmad Raza of Ahmad Digital Studio. Ask anything — answers stream in with clean Markdown and highlighted code.",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
-    title: "AI Chat",
+    title: "MarkBot",
   },
 };
 
@@ -28,14 +35,10 @@ export default function RootLayout({
   return (
     <html lang="en" data-scroll-behavior="smooth">
       <head>
-        <link
-          href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
-          rel="stylesheet"
-        />
         <link rel="apple-touch-icon" href="/icon.svg" />
         <meta name="mobile-web-app-capable" content="yes" />
       </head>
-      <body>{children}</body>
+      <body className={spaceGrotesk.variable}>{children}</body>
     </html>
   );
 }
