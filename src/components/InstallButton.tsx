@@ -94,10 +94,10 @@ export function InstallButton() {
   return (
     <button
       onClick={handleClick}
-      className="px-2.5 py-1.5 text-xs font-medium rounded-lg transition-colors"
+      className="px-2 py-1.5 text-xs font-medium rounded-lg transition-colors"
       style={buttonStyle}
     >
-      ⬇ Download
+      ⬇ App
     </button>
   );
 }
