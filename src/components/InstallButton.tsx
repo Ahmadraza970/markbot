@@ -7,6 +7,11 @@ interface BeforeInstallPromptEvent extends Event {
   userChoice: Promise<{ outcome: "accepted" | "dismissed"; platform: string }>;
 }
 
+const buttonStyle = {
+  color: "var(--color-chat-dim)",
+  border: "1px solid var(--color-chat-border)",
+};
+
 export function InstallButton() {
   const [deferred, setDeferred] = useState<BeforeInstallPromptEvent | null>(null);
   const [installed, setInstalled] = useState(false);
@@ -63,39 +68,36 @@ export function InstallButton() {
     };
   }, []);
 
-  const handleInstall = async () => {
-    if (!deferred) return;
-    await deferred.prompt();
-    const { outcome } = await deferred.userChoice;
-    if (outcome === "accepted") {
-      setDeferred(null);
-      setInstalled(true);
+  const handleClick = async () => {
+    if (showIOS) {
+      alert('Tap Share \u2192 "Add to Home Screen" to install MarkBot.');
+      return;
     }
+    if (deferred) {
+      await deferred.prompt();
+      const { outcome } = await deferred.userChoice;
+      if (outcome === "accepted") {
+        setDeferred(null);
+        setInstalled(true);
+      }
+      return;
+    }
+    // No install prompt available (already offered, dismissed, or this
+    // browser does not provide one) — the download page always works:
+    // it carries the Android APK and the browser option.
+    window.location.href = "/download";
   };
 
+  // Already running as the installed app — nothing to download.
   if (installed) return null;
-
-  if (showIOS) {
-    return (
-      <button
-        onClick={() =>
-          alert('Tap Share \u2192 "Add to Home Screen"')
-        }
-        className="text-xs text-zinc-500 hover:text-zinc-300 transition-colors underline underline-offset-2"
-      >
-        Install App
-      </button>
-    );
-  }
-
-  if (!deferred) return null;
 
   return (
     <button
-      onClick={handleInstall}
-      className="px-3 py-1.5 text-xs font-medium bg-gradient-to-r from-cyan-500 to-purple-600 rounded-lg text-white hover:opacity-90 transition-all active:scale-95"
+      onClick={handleClick}
+      className="px-2.5 py-1.5 text-xs font-medium rounded-lg transition-colors"
+      style={buttonStyle}
     >
-      Install App
+      ⬇ Download
     </button>
   );
 }
