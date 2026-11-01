@@ -6,7 +6,7 @@
 
 **Live demo: [md-bot.netlify.app](https://md-bot.netlify.app)**
 
-Next.js · React 19 · TypeScript · Tailwind v4 · AI SDK v7 · OpenRouter
+Next.js · React 19 · TypeScript · Tailwind v4 · AI SDK v7 · OpenAI-compatible API
 
 ![Next.js](https://img.shields.io/badge/Next.js-16.2-000000?logo=nextdotjs&logoColor=white)
 ![React](https://img.shields.io/badge/React-19.2-61DAFB?logo=react&logoColor=111111)
@@ -24,7 +24,7 @@ Next.js · React 19 · TypeScript · Tailwind v4 · AI SDK v7 · OpenRouter
 
 MarkBot is a focused, single-purpose AI chat client. It streams responses token by token, renders them as rich Markdown with syntax-highlighted code, and can be installed to a phone's home screen as a standalone PWA — no app store, no wrapper.
 
-It speaks the OpenAI-compatible protocol, so it runs against **OpenRouter** out of the box and can be pointed at any compatible endpoint by changing one environment variable. The API key is read on the server only — it never reaches the browser.
+It speaks the OpenAI-compatible protocol, so it runs against an OpenAI-compatible endpoint out of the box and can be pointed at any compatible endpoint by changing one environment variable. The API key is read on the server only — it never reaches the browser.
 
 ## Preview
 
@@ -41,7 +41,7 @@ It speaks the OpenAI-compatible protocol, so it runs against **OpenRouter** out 
 | **Syntax highlighting** | Fenced code blocks are highlighted with `highlight.js` |
 | **Installable PWA** | Native install prompt on Chrome/Edge, with guided *Add to Home Screen* instructions on iOS Safari |
 | **Mobile-first layout** | Dynamic viewport height (`--vh`) and safe-area insets keep the composer clear of notches and browser chrome |
-| **Provider-agnostic** | Any OpenAI-compatible base URL — OpenRouter, OpenAI, a local server |
+| **Provider-agnostic** | Any OpenAI-compatible base URL — a hosted provider or a local server |
 | **Graceful failures** | Missing API key and upstream errors surface as readable chat messages, never a blank screen |
 | **Zero client persistence** | Conversations live in memory only; nothing is written to storage or a database |
 
@@ -115,15 +115,15 @@ public/
 
 1. `chat/page.tsx` collects input and calls `sendMessage` from `useChat`.
 2. The AI SDK POSTs the message history to `/api/chat`.
-3. `route.ts` normalises messages, then calls `streamText` with **`gpt-4o-mini`**.
+3. `route.ts` normalises messages, then calls `streamText` with the configured chat model (kept server-side only — the model name is never exposed to the client or the user) and the layered system prompt from `src/lib/system-prompt.ts`.
 4. The stream is adapted with `toUIMessageStream` and returned as SSE.
 5. `ChatMessage` renders each delta — Markdown for the assistant, plain text for the user.
 
 To change the model or the system instructions, edit `src/app/api/chat/route.ts`:
 
 ```ts
-model: openai.chat("gpt-4o-mini"),
-instructions: "You are a helpful AI assistant. Respond clearly and concisely.",
+model: openai.chat("…"), // configured model — server-side only, never shown to users
+instructions: MARKBOT_SYSTEM_PROMPT, // src/lib/system-prompt.ts
 ```
 
 ## Scripts
