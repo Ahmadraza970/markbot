@@ -4,7 +4,7 @@
 
 **A streaming AI chat that renders Markdown and code beautifully — and installs like a native app.**
 
-**Live demo: [md-bot.netlify.app](https://markbot-ahmadbkj92-1206s-projects.vercel.app)**
+**Live demo: [markbot on Vercel](https://markbot-ahmadbkj92-1206s-projects.vercel.app)**
 
 Next.js · React 19 · TypeScript · Tailwind v4 · AI SDK v7 · OpenAI-compatible API
 
@@ -139,7 +139,7 @@ instructions: MARKBOT_SYSTEM_PROMPT, // src/lib/system-prompt.ts
 
 ## Deployment
 
-The live app runs on Netlify: **[md-bot.netlify.app](https://markbot-ahmadbkj92-1206s-projects.vercel.app)**. `netlify.toml` configures the build command, the `.next` publish directory, and baseline security headers (`X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`) plus cache policy for the manifest.
+The live app runs on Vercel: **[markbot on Vercel](https://markbot-ahmadbkj92-1206s-projects.vercel.app)**. (The repo still carries a `netlify.toml` from its earlier Netlify hosting.)
 
 Set `OPENAI_API_KEY` in your host's environment settings before the first deploy — build succeeds without it, but chat requests will return the configuration error.
 
