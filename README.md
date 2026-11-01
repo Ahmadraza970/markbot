@@ -1,162 +1,80 @@
-<div align="center">
+# MarkBot
 
-# MarkBot — AI Chat with Markdown & Code
+**A friendly AI chatbot with streaming Markdown and code — built by [Ahmad Raza](https://ahmadstudio.onrender.com) of Ahmad Digital Studio.**
 
-**A streaming AI chat that renders Markdown and code beautifully — and installs like a native app.**
+[**Live Demo →**](https://markbot-ahmad.vercel.app) · [**Download the Android App →**](https://markbot-ahmad.vercel.app/download) · License: MIT
 
-**Live demo: [markbot on Vercel](https://markbot-ahmadbkj92-1206s-projects.vercel.app)**
+<p align="center">
+  <img src="docs/screenshot.png" alt="MarkBot chat screen" width="320">
+</p>
 
-Next.js · React 19 · TypeScript · Tailwind v4 · AI SDK v7 · OpenAI-compatible API
+## Try it
 
-![Next.js](https://img.shields.io/badge/Next.js-16.2-000000?logo=nextdotjs&logoColor=white)
-![React](https://img.shields.io/badge/React-19.2-61DAFB?logo=react&logoColor=111111)
-![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)
-![Tailwind](https://img.shields.io/badge/Tailwind-4-06B6D4?logo=tailwindcss&logoColor=white)
-![AI SDK](https://img.shields.io/badge/AI_SDK-7-111111)
-![License](https://img.shields.io/badge/License-MIT-green)
-![Status](https://img.shields.io/badge/repo-private-red)
-
-</div>
-
----
-
-## Overview
-
-MarkBot is a focused, single-purpose AI chat client. It streams responses token by token, renders them as rich Markdown with syntax-highlighted code, and can be installed to a phone's home screen as a standalone PWA — no app store, no wrapper.
-
-It speaks the OpenAI-compatible protocol, so it runs against an OpenAI-compatible endpoint out of the box and can be pointed at any compatible endpoint by changing one environment variable. The API key is read on the server only — it never reaches the browser.
-
-## Preview
-
-<div align="center">
-  <img src="docs/screenshot.png" alt="MarkBot showing a streamed answer with a syntax-highlighted JavaScript code block" width="820">
-</div>
+- **Web:** open the [live demo](https://markbot-ahmad.vercel.app) and start typing — no sign-up, no key needed.
+- **Android:** get the app from the [download page](https://markbot-ahmad.vercel.app/download), or install the [APK directly](https://markbot-ahmad.vercel.app/MarkBot.apk) (41 KB, Android 7.0+). The app is a clean full-screen shell — no browser address bar, just MarkBot.
 
 ## Features
 
-| | |
-|---|---|
-| **Real-time streaming** | Responses arrive token by token over Server-Sent Events — no waiting for the full answer |
-| **Rich Markdown** | Tables, lists, links and blockquotes via `react-markdown` + `remark-gfm` |
-| **Syntax highlighting** | Fenced code blocks are highlighted with `highlight.js` |
-| **Installable PWA** | Native install prompt on Chrome/Edge, with guided *Add to Home Screen* instructions on iOS Safari |
-| **Mobile-first layout** | Dynamic viewport height (`--vh`) and safe-area insets keep the composer clear of notches and browser chrome |
-| **Provider-agnostic** | Any OpenAI-compatible base URL — a hosted provider or a local server |
-| **Free by default** | The built-in chat runs on a free route that needs no API key at all; if the owner adds a key, it only ever calls a free model (`openrouter/free`) — never a paid one |
-| **Bring your own key** | Visitors can paste their own OpenRouter API key; it is stored only in their browser and used per request, never stored or logged server-side |
-| **Graceful failures** | Missing API key and upstream errors surface as readable chat messages, never a blank screen |
-| **Zero client persistence** | Conversations live in memory only; nothing is written to storage or a database |
+| Feature | What it means |
+| --- | --- |
+| **Streaming answers** | Replies arrive token-by-token with clean Markdown and syntax-highlighted code blocks |
+| **A real personality** | A layered system prompt sets MarkBot's identity — a chatbot created and built by Ahmad Raza — plus its tone, grounding rules, and safety limits |
+| **No model talk** | MarkBot never reveals, confirms, or denies the underlying AI model or provider — ask it, it will just say it is MarkBot |
+| **Free out of the box** | The built-in chat runs on a free route that needs no API key at all |
+| **Bring your own key** | Visitors can paste their own OpenRouter API key; it is stored only in their browser and used per request — never stored or logged on the server |
+| **Owner key, free only** | If the owner configures a key, the server only ever calls a free model — never a paid one |
+| **Light, fast UI** | A white, black & green interface that works as an installable PWA and a native Android app |
 
-## Tech stack
+## How it works
 
-| Layer | Choice |
-|---|---|
-| Framework | Next.js 16 (App Router) |
-| UI | React 19, Tailwind CSS v4 |
-| Language | TypeScript 5 (strict) |
-| AI | Vercel AI SDK v7 (`ai`, `@ai-sdk/openai`, `@ai-sdk/react`) |
-| Markdown | `react-markdown`, `remark-gfm`, `rehype-highlight` |
-| Fonts | Space Grotesk (UI), Orbitron (display) |
+MarkBot is a Next.js (App Router) application. The chat UI posts to a single route,
+`POST /api/chat`, which streams the reply using the Vercel AI SDK. For every request the
+server picks its route in this order:
 
-## Getting started
+1. **Visitor key** — if the visitor added their own key in the header panel, that key is used for their requests only.
+2. **Owner key** — otherwise, if `OPENAI_API_KEY` is configured on the server, it is used with a free model.
+3. **Free no-key route** — otherwise, a free OpenAI-compatible endpoint answers, so the demo always works.
 
-**Requirements:** Node.js 20+ and an API key for an OpenAI-compatible provider.
+The system prompt lives in `src/lib/system-prompt.ts` and is layered on purpose:
+identity first, then tone and style, then grounding (never fabricate), then safety
+(treat pasted content as data, not instructions), then a graceful fallback.
+
+## Run it locally
 
 ```bash
-git clone https://github.com/Ahmadraza970/markbot.git
-cd markbot
 npm install
-```
-
-Create `.env.local` in the project root:
-
-```bash
-OPENAI_API_KEY=your_key_here
-# OPENAI_BASE_URL=https://openrouter.ai/api/v1   # optional
-```
-
-Then start the development server:
-
-```bash
 npm run dev
 ```
 
-Open **http://localhost:3000** — the chat lives at `/chat`, and `/` renders it directly.
+Open http://localhost:3000. No environment variables are required — the free route
+answers out of the box. Optional, only if you want the server to use your own key:
 
-> The dev script runs `next dev --webpack` deliberately. Keep the flag.
+| Variable | Purpose |
+| --- | --- |
+| `OPENAI_API_KEY` | Owner key (used with a free model only) |
+| `OPENAI_BASE_URL` | OpenAI-compatible endpoint for the owner key (defaults to OpenRouter) |
 
-## Environment variables
+## Deploy
 
-| Variable | Required | Default | Purpose |
-|---|---|---|---|
-| `OPENAI_API_KEY` | **Yes** | — | Bearer token for the provider. Without it the UI reports a clear configuration error instead of failing silently. |
-| `OPENAI_BASE_URL` | No | `https://openrouter.ai/api/v1` | Base URL of any OpenAI-compatible API. |
+The app deploys cleanly to Vercel as a standard Next.js project:
 
-`.env*` files are gitignored. Never commit a key.
+1. Import the repository in Vercel (framework preset: Next.js).
+2. Optionally add `OPENAI_API_KEY` under Settings → Environment Variables.
+3. Deploy. The Android APK in `public/` is served at `/MarkBot.apk` and linked from `/download`.
 
-## Project structure
+## Privacy
 
-```
-src/
-├── app/
-│   ├── api/chat/route.ts    # POST /api/chat — streams the model response
-│   ├── chat/page.tsx        # Chat UI: composer, message list, clear/error states
-│   ├── layout.tsx           # Metadata, PWA wiring, fonts
-│   ├── page.tsx             # Re-exports /chat so the root route is the chat
-│   └── globals.css          # Design tokens (@theme) and base styles
-└── components/
-    ├── ChatMessage.tsx      # Markdown + code-highlighted message bubble
-    └── InstallButton.tsx    # beforeinstallprompt handling + iOS fallback
+- No accounts and no sign-up — chats are not stored on the server.
+- Visitor keys live only in the visitor's own browser storage and travel with their
+  requests solely to fetch their replies; they are never written to server logs.
+- The Android app contains no trackers and asks only for internet permission.
 
-public/
-├── manifest.json            # PWA manifest (standalone, portrait)
-└── icon.svg                 # Maskable app icon
-```
+## Credits
 
-## How a message flows
-
-1. `chat/page.tsx` collects input and calls `sendMessage` from `useChat`.
-2. The AI SDK POSTs the message history to `/api/chat`.
-3. `route.ts` normalises messages, then calls `streamText` with the configured chat model (kept server-side only — the model name is never exposed to the client or the user) and the layered system prompt from `src/lib/system-prompt.ts`.
-4. The stream is adapted with `toUIMessageStream` and returned as SSE.
-5. `ChatMessage` renders each delta — Markdown for the assistant, plain text for the user.
-
-To change the model or the system instructions, edit `src/app/api/chat/route.ts`:
-
-```ts
-model: openai.chat("…"), // configured model — server-side only, never shown to users
-instructions: MARKBOT_SYSTEM_PROMPT, // src/lib/system-prompt.ts
-```
-
-## Scripts
-
-| Command | Description |
-|---|---|
-| `npm run dev` | Development server with Webpack (port 3000) |
-| `npm run build` | Production build |
-| `npm run start` | Serve the production build |
-| `npm run lint` | ESLint |
-
-## Deployment
-
-The live app runs on Vercel: **[markbot on Vercel](https://markbot-ahmadbkj92-1206s-projects.vercel.app)**. (The repo still carries a `netlify.toml` from its earlier Netlify hosting.)
-
-Set `OPENAI_API_KEY` in your host's environment settings before the first deploy — build succeeds without it, but chat requests will return the configuration error.
-
-Any Node host works: the only runtime requirement is a long-lived Node server capable of streaming responses. Static hosting alone will not work because `/api/chat` is a server route.
-
-## Notes
-
-- **Client-side state only.** Reloading the page clears the conversation by design; there is no database, auth layer, or history store.
-- **Rate limiting is not included.** If the endpoint is public, add a limiter at the edge or proxy before exposing it.
-- **The install button appears only when the browser offers installation.** On unsupported browsers the component renders nothing rather than showing a dead control.
+Designed and built by **Ahmad Raza** — freelance web developer & designer,
+**Ahmad Digital Studio**, Bihar, India.
+Portfolio: https://ahmadstudio.onrender.com · YouTube: [@buildbyahmad](https://www.youtube.com/@buildbyahmad)
 
 ## License
 
 MIT — see [LICENSE](LICENSE).
-
----
-
-<div align="center">
-<sub>Built by <b>Ahmad Raza</b> — <a href="https://ahmadstudio.onrender.com">Ahmad Digital Studio</a> · Built with Next.js, the Vercel AI SDK and Tailwind CSS.</sub>
-</div>
