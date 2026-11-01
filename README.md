@@ -64,10 +64,14 @@ The app deploys cleanly to Vercel as a standard Next.js project:
 
 ## Privacy
 
-- No accounts and no sign-up — chats are not stored on the server.
-- Visitor keys live only in the visitor's own browser storage and travel with their
-  requests solely to fetch their replies; they are never written to server logs.
-- The Android app contains no trackers and asks only for internet permission.
+MarkBot is built to collect as little as possible:
+
+- **No accounts, no sign-up, no chat storage** — conversations are processed in real time and never saved on the server.
+- **No ads, no analytics trackers**, on the website or in the Android app (internet permission only).
+- **Your own-key option stays yours** — a visitor's key lives only in their browser's local storage, is sent per request to fetch replies, and is never stored or logged on the server.
+- Messages are forwarded over HTTPS to an AI provider only to generate the reply — so don't paste passwords or other sensitive personal details into the chat.
+
+Full policy: [markbot-ahmad.vercel.app/privacy](https://markbot-ahmad.vercel.app/privacy) · [PRIVACY.md](PRIVACY.md)
 
 ## Credits
 
