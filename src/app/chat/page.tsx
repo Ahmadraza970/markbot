@@ -86,14 +86,14 @@ export default function ChatPage() {
                 setMessages([]);
               }
             }}
-            className="px-2.5 py-1.5 text-xs font-medium rounded-lg transition-colors"
+            className="px-2 py-1.5 text-xs font-medium rounded-lg transition-colors"
             style={{color: "var(--color-chat-dim)", border: "1px solid var(--color-chat-border)"}}
           >
-            Clear Chat
+            Clear
           </button>
           <button
             onClick={() => setKeyPanelOpen((v) => !v)}
-            className="px-2.5 py-1.5 text-xs font-medium rounded-lg transition-colors"
+            className="px-2 py-1.5 text-xs font-medium rounded-lg transition-colors"
             style={{color: "var(--color-chat-dim)", border: "1px solid var(--color-chat-border)"}}
           >
             {userKey ? "🔑 Key On" : "🔑 Add Key"}
