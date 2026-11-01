@@ -50,7 +50,7 @@ export default function DownloadPage() {
         </a>
 
         <p className="mt-5 text-sm" style={{ color: "var(--color-chat-dim)" }}>
-          Free · No sign-up · Android 7.0+ · 41 KB · Version 1.0.0
+          Free · No sign-up · Android 7.0+ · 41 KB · Version 1.0.1
         </p>
         <p className="mt-3 text-sm leading-relaxed" style={{ color: "var(--color-chat-muted)" }}>
           The app needs an internet connection — MarkBot thinks on the server,
