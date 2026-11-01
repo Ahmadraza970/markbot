@@ -2,33 +2,43 @@
 
 import { useEffect, useState } from "react";
 
+interface BeforeInstallPromptEvent extends Event {
+  prompt: () => Promise<void>;
+  userChoice: Promise<{ outcome: "accepted" | "dismissed"; platform: string }>;
+}
+
 export function InstallButton() {
-  const [deferred, setDeferred] = useState<any>(null);
+  const [deferred, setDeferred] = useState<BeforeInstallPromptEvent | null>(null);
   const [installed, setInstalled] = useState(false);
   const [showIOS, setShowIOS] = useState(false);
 
   useEffect(() => {
-    const isInstalled =
-      window.matchMedia("(display-mode: standalone)").matches ||
-      window.matchMedia("(display-mode: minimal-ui)").matches ||
-      window.matchMedia("(display-mode: window-controls-overlay)").matches ||
-      (navigator as any).standalone === true;
+    // Browser-only detection (display mode, platform). It runs inside a
+    // frame callback so the first render matches the server output and the
+    // state updates land in a callback, not synchronously in the effect.
+    const raf = requestAnimationFrame(() => {
+      const isInstalled =
+        window.matchMedia("(display-mode: standalone)").matches ||
+        window.matchMedia("(display-mode: minimal-ui)").matches ||
+        window.matchMedia("(display-mode: window-controls-overlay)").matches ||
+        (navigator as Navigator & { standalone?: boolean }).standalone === true;
 
-    if (isInstalled) {
-      setInstalled(true);
-      return;
-    }
+      if (isInstalled) {
+        setInstalled(true);
+        return;
+      }
 
-    const isSafari =
-      /Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent);
-    const ios =
-      /iPad|iPhone|iPod/.test(navigator.userAgent) ||
-      (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
-    setShowIOS(ios && isSafari);
+      const isSafari =
+        /Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent);
+      const ios =
+        /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+        (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+      setShowIOS(ios && isSafari);
+    });
 
     const onPrompt = (e: Event) => {
       e.preventDefault();
-      setDeferred(e);
+      setDeferred(e as BeforeInstallPromptEvent);
     };
 
     const onInstalled = () => {
@@ -46,6 +56,7 @@ export function InstallButton() {
     window.addEventListener("appinstalled", onInstalled);
 
     return () => {
+      cancelAnimationFrame(raf);
       mql.removeEventListener("change", onDisplayModeChange);
       window.removeEventListener("beforeinstallprompt", onPrompt);
       window.removeEventListener("appinstalled", onInstalled);
@@ -54,7 +65,7 @@ export function InstallButton() {
 
   const handleInstall = async () => {
     if (!deferred) return;
-    deferred.prompt();
+    await deferred.prompt();
     const { outcome } = await deferred.userChoice;
     if (outcome === "accepted") {
       setDeferred(null);
