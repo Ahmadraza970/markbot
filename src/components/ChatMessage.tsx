@@ -40,7 +40,7 @@ export function ChatMessage({ message }: { message: Message }) {
         }}
       >
         {isAssistant ? (
-          <div className="prose prose-invert prose-sm max-w-none">
+          <div className="prose prose-sm max-w-none">
             <ReactMarkdown
               remarkPlugins={[remarkGfm]}
               rehypePlugins={[rehypeHighlight]}
