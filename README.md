@@ -1,6 +1,6 @@
 # MarkBot
 
-**A friendly AI chatbot with streaming Markdown and code — built by [Ahmad Raza](https://ahmadstudio.onrender.com) of Ahmad Digital Studio.**
+**A friendly AI chatbot with streaming Markdown and code — built by [Ahmad Raza](https://ahmadrazaa.me) of Ahmad Digital Studio.**
 
 [**Live Demo →**](https://markbot-ahmad.vercel.app) · [**Download the Android App →**](https://markbot-ahmad.vercel.app/download) · License: MIT
 
@@ -77,7 +77,7 @@ Full policy: [markbot-ahmad.vercel.app/privacy](https://markbot-ahmad.vercel.app
 
 Designed and built by **Ahmad Raza** — freelance web developer & designer,
 **Ahmad Digital Studio**, Bihar, India.
-Portfolio: https://ahmadstudio.onrender.com · YouTube: [@buildbyahmad](https://www.youtube.com/@buildbyahmad)
+Portfolio: https://ahmadrazaa.me · YouTube: [@buildbyahmad](https://www.youtube.com/@buildbyahmad)
 
 ## License
 
