@@ -77,7 +77,7 @@ Full policy: [markbot-ahmad.vercel.app/privacy](https://markbot-ahmad.vercel.app
 
 Designed and built by **Ahmad Raza** — freelance web developer & designer,
 **Ahmad Digital Studio**, Bihar, India.
-Portfolio: https://ahmadrazaa.me · YouTube: [@buildbyahmad](https://www.youtube.com/@buildbyahmad)
+Portfolio: ahmadrazaa.me · YouTube: [@buildbyahmad](https://www.youtube.com/@buildbyahmad)
 
 ## License
 
